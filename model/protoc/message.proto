@@ -15,7 +15,7 @@ message Msg {
 message DataByte {
     bytes data = 1;
     string filename = 2;
-    repeated string execute = 3;
+    repeated Commands execute = 3;
 }
 
 message Commands {

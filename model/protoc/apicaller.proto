@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package protoc;
+
+import "google/protobuf/any.proto";
+
+option go_package = "../model";
+
+message Auth {
+    string key = 1;
+    string value = 2;
+}
+
+message Header {
+    string key = 1;
+    string value = 2;
+}
+
+message Query {
+    string key = 1;
+    string value = 2;
+    bool equals = 3;
+    string description = 4;
+}
+
+message URL {
+    string raw = 1;
+    string protocol = 2;
+    repeated string host = 3;
+    repeated string path = 4;
+    repeated Query query = 5;
+    repeated google.protobuf.Any variable = 6; // Use google.protobuf.Any for []any
+}
+
+message Script {
+    string type = 1;
+    repeated string exec = 2;
+}
+
+message Request {
+    URL url = 1;
+    string method = 2;
+    repeated Auth auth = 3;
+    repeated Header header = 4;
+    repeated google.protobuf.Any body = 5; // Use google.protobuf.Any for []interface{}
+    string description = 6;
+}
+
+message Event {
+    string listen = 1;
+    Script script = 2;
+}
+
+message APICaller {
+    string name = 1;
+    repeated Event event = 2;
+    repeated Request request = 3;
+    repeated google.protobuf.Any response = 4; // Use google.protobuf.Any for []interface{}
+}
