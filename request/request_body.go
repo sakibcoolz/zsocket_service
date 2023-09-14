@@ -23,7 +23,7 @@ func (e ErrResp) Responder(ctx *gin.Context) {
 	ctx.JSON(e.Status, e.Msg)
 }
 
-func Binder(ctx *gin.Context, obj any, log *zap.Logger) IErrResp {
+func Binder(ctx *gin.Context, obj any, log *zap.Logger) ErrResp {
 	var errs ErrResp
 	if err := ctx.ShouldBindBodyWith(obj, binding.JSON); err != nil {
 		return ValidationError(ctx, err, log)
@@ -32,7 +32,7 @@ func Binder(ctx *gin.Context, obj any, log *zap.Logger) IErrResp {
 	return errs
 }
 
-func Validator(ctx *gin.Context, obj any, validate *validator.Validate) IErrResp {
+func Validator(ctx *gin.Context, obj any, validate *validator.Validate) ErrResp {
 	var errs ErrResp
 
 	if err := validate.Struct(obj); err != nil {
@@ -67,7 +67,7 @@ func ValidationUnprocessableEntity(ctx *gin.Context, err error, log *zap.Logger)
 	return errs
 }
 
-func InternalError(ctx *gin.Context, err error, log *zap.Logger) IErrResp {
+func InternalError(ctx *gin.Context, err error, log *zap.Logger) ErrResp {
 	errs := ErrResp{
 		Status: http.StatusInternalServerError,
 		Msg:    literals.ErrorResponse[literals.FAIL_TO_STORE],
