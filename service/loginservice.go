@@ -47,7 +47,5 @@ func (s *Service) Login(ctx *gin.Context, login model.Login) (model.LoginRespons
 		Topic:     s.mqtttopic,
 	}
 
-	// encryption = utils.Encryption(s.Log, utils.JsonMarshal(s.Log, loginResponse))
-
 	return loginResponse, nil
 }

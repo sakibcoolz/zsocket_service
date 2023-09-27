@@ -3,7 +3,8 @@ package controller
 import (
 	"net/http"
 	"zsocket_service/model"
-	handler "zsocket_service/request"
+	"zsocket_service/response"
+	"zsocket_service/validators"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
@@ -15,22 +16,22 @@ func (c *Controller) Login(ctx *gin.Context) {
 		err error
 	)
 
-	if err := handler.Binder(ctx, &req, c.log); err.Status != 0 {
-		err.Responder(ctx)
+	if err := validators.Binder(ctx, &req, c.log); err.Err != nil {
+		err.Responder(ctx, c.log)
 
 		return
 	}
 
-	if err := handler.Validator(ctx, &req, c.validate); err.Status != 0 {
-		err.Responder(ctx)
+	if err := validators.Validator(ctx, &req, c.validate); err.Err != nil {
+		err.Responder(ctx, c.log)
 
 		return
 	}
 
 	loginResponse, err := c.service.Login(ctx, req)
 	if err != nil {
-		if responder := handler.InternalError(ctx, err, c.log); responder.Status != 0 {
-			responder.Responder(ctx)
+		if responder := response.InternalError(ctx, err, c.log); responder.Err != nil {
+			responder.Responder(ctx, c.log)
 
 			return
 		}

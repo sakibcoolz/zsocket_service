@@ -27,3 +27,9 @@ type Contact struct {
 	Value        string `gorm:"column:value" json:"value,omitempty"`
 	Status       string `gorm:"column:status" json:"status,omitempty"` // Active / Block / Lock
 }
+
+type ErrFormat struct {
+	Status int    `json:"status,omitempty"`
+	Msg    string `json:"msg,omitempty"`
+	Err    string `json:"err,omitempty"`
+}

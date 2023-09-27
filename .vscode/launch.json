@@ -22,7 +22,7 @@
                 "HCLIENT":"fire_service",
                 "HTOPIC":"topic/fire_client",
                 "SERVICEHOST":"localhost",
-                "SERVICEPORT":"8080",
+                "SERVICEPORT":"8081",
                 "SECRETKEY":"dolo650",
             }
         }
